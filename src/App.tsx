@@ -1,14 +1,7 @@
-import React, { useEffect } from 'react';
-import useDeckService from './hooks/API/useDeckService';
-import GameBoard from './components/GameBoard/GameBoard';
+import React from 'react';
+import GameBoard from './components/GameBoard';
 
 function App() {
-  const deckData = useDeckService();
-
-  useEffect(() => {
-    console.log('deckData: ', deckData);
-  }, [deckData])
-
   return (
     <div className="app-container">
       <div className="app-content">

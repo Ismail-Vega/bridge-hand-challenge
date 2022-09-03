@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import apiClient from '../../apiClient';
-import { Cards } from '../../types/card';
 import { Service } from '../../types/deck.service';
 
 interface ServerResponse {
@@ -9,20 +8,28 @@ interface ServerResponse {
 
 const useDeckService = () => {
   const [deckId, setDeckId] = useState('');
-  const [data, setData] = useState<Service<Cards | []>>({
+  const [data, setData] = useState<Service>({
     status: 'loading',
+    payload: [],
   });
 
+  // based on: https://github.com/reactwg/react-18/discussions/18
+  const didInitialFetch = useRef(false);
+
   useEffect(() => {
-    apiClient
-      .get<string>('/new/shuffle', {
-        transformResponse: (r: ServerResponse) => r,
-      })
-      .then((res) => {
-        const { deck_id } = JSON.parse(res.data);
-        setDeckId(deck_id);
-      })
-      .catch((error) => setData({ status: 'error', error }));
+    if (!didInitialFetch.current) {
+      didInitialFetch.current = true;
+
+      apiClient
+        .get<string>('/new/shuffle', {
+          transformResponse: (r: ServerResponse) => r,
+        })
+        .then((res) => {
+          const { deck_id } = JSON.parse(res.data);
+          setDeckId(deck_id);
+        })
+        .catch((error) => setData({ status: 'error', error, payload: [] }));
+    }
   }, []);
 
   useEffect(() => {
@@ -35,7 +42,7 @@ const useDeckService = () => {
           const { cards } = JSON.parse(data);
           setData({ status: 'loaded', payload: cards || [] });
         })
-        .catch((error) => setData({ status: 'error', error }));
+        .catch((error) => setData({ status: 'error', error, payload: [] }));
     }
   }, [deckId]);
 

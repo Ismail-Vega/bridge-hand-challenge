@@ -1,2 +1,1 @@
-export type { GameBoardProps } from './GameBoardProps';
-export * from './GameBoard';
+export { default } from './GameBoard';

@@ -8,7 +8,3 @@ export interface Card {
   value: string;
   suit: string;
 }
-
-export interface Cards {
-  cards: Card[];
-}

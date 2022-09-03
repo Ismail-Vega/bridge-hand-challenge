@@ -1,3 +1,1 @@
-import setupStore from './setup';
-
-export { setupStore };
+export * from './store';
