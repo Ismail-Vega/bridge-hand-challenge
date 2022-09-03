@@ -1,11 +1,12 @@
 import React from 'react';
+import GameBoard from './components/GameBoard/GameBoard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-
-      </header>
+    <div className="app-container">
+      <div className="app-content">
+        <GameBoard />
+      </div>
     </div>
   );
 }
