@@ -1,0 +1,16 @@
+.app {
+  &-container {
+    width: 100vw;
+    height: 100vh;
+    padding: $space-12 $space-48;
+  }
+
+  &-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border-radius: $space-4;
+    border: $space-2 solid $green;
+    max-width: $game-content-max-width;
+  }
+}
