@@ -39,6 +39,24 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Deck of Cards API
+
+The API used to render all cards is https://deckofcardsapi.com/. Two endpoints where used:
+  - Shuffle the Cards: https://deckofcardsapi.com/api/deck/new/shuffle generate a new set of 52 cards.
+  - Draw a Card: https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=52 to get all cards.
+  - A hook useDeckService was used to handle card generation and new game creation.
+## This Project uses Redux Toolkit
+
+### Points per Suit
+- The application handles the number of points per suit that every player has.
+- With this, we can calculate the total points per hand adding all suit values.
+
+## Styles
+
+### It was used a mixed styling system using sass and Material-UI components
+
+The game board layout uses a grid system that allows the positioning of the hands in a better way.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
