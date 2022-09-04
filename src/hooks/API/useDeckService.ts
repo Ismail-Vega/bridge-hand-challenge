@@ -16,19 +16,22 @@ const useDeckService = () => {
   // based on: https://github.com/reactwg/react-18/discussions/18
   const didInitialFetch = useRef(false);
 
+  const shuffleDeck = () => {
+    apiClient
+      .get<string>('/new/shuffle', {
+        transformResponse: (r: ServerResponse) => r,
+      })
+      .then((res) => {
+        const { deck_id } = JSON.parse(res.data);
+        setDeckId(deck_id);
+      })
+      .catch((error) => setData({ status: 'error', error, payload: [] }));
+  };
+
   useEffect(() => {
     if (!didInitialFetch.current) {
       didInitialFetch.current = true;
-
-      apiClient
-        .get<string>('/new/shuffle', {
-          transformResponse: (r: ServerResponse) => r,
-        })
-        .then((res) => {
-          const { deck_id } = JSON.parse(res.data);
-          setDeckId(deck_id);
-        })
-        .catch((error) => setData({ status: 'error', error, payload: [] }));
+      shuffleDeck();
     }
   }, []);
 
@@ -46,7 +49,7 @@ const useDeckService = () => {
     }
   }, [deckId]);
 
-  return data;
+  return { data, shuffleDeck };
 };
 
 export default useDeckService;
